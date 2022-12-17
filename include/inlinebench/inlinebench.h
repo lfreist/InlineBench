@@ -18,7 +18,6 @@
 #include <ctime>
 #elif defined(__APPLE__)
 #define __IB_APPLE__
-
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #define __IB_WINDOWS__
 #endif
@@ -42,7 +41,9 @@ class CPUTime {
     return -1;
   }
 #elif defined(__IB_WINDOWS__)
-  static int64_t now() { return -1; }
+  static int64_t now() {
+    return -1;
+  }
 #endif
 };
 
