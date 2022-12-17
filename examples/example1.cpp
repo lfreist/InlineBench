@@ -20,9 +20,9 @@ int _fibonacci(int n) {
 }
 
 int fibonacci(int n) {
-  INLINE_BENCHMARK_THREAD_WALL_START("computing fibonacci");
+  INLINE_BENCHMARK_WALL_START("computing fibonacci");
   int res = _fibonacci(n);
-  INLINE_BENCHMARK_THREAD_WALL_STOP("computing fibonacci");
+  INLINE_BENCHMARK_WALL_STOP("computing fibonacci");
   std::cout << "fibonacci(" << n << ") = " << res << std::endl;
   return res;
 }

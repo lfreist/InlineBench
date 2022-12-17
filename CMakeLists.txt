@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.9)
 project(InlineBench C CXX)
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED 11)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -20,16 +18,10 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     set(MAIN_PROJECT ON)
 endif()
 
-# --- BOOST ------------------------------------------------------------------------------------------------------------
-find_package(Boost 1.74 REQUIRED COMPONENTS chrono)
-include_directories(${Boost_INCLUDE_DIR})
-# ----------------------------------------------------------------------------------------------------------------------
-
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
 add_library(InlineBench INTERFACE)
 target_include_directories(InlineBench INTERFACE .)
-target_link_libraries(InlineBench INTERFACE boost_chrono)
 
 IF(${MAIN_PROJECT})
     add_subdirectory(examples)

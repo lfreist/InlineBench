@@ -11,19 +11,22 @@
 
 #include <thread>
 
-void wait_for(int seconds) {
-  for (; seconds > 0; --seconds) {
-    INLINE_BENCHMARK_THREAD_CPU_START("sleep");
-    sleep(1);
-    INLINE_BENCHMARK_THREAD_CPU_STOP("sleep");
+void busy_wait_for(int seconds) {
+  auto start = std::chrono::steady_clock::now();
+  INLINE_BENCHMARK_CPU_START("sleep");
+  while (true) {
+    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start).count() >= seconds) {
+      break;
+    }
   }
+  INLINE_BENCHMARK_CPU_STOP("sleep");
 }
 
 int main() {
   std::cout << "sleeping for 5 seconds... on multiple threads!" << std::endl;
-  std::thread t0(wait_for, 5);
-  std::thread t1(wait_for, 5);
-  std::thread t2(wait_for, 5);
+  std::thread t0(busy_wait_for, 5);
+  std::thread t1(busy_wait_for, 5);
+  std::thread t2(busy_wait_for, 5);
 
   t0.join();
   t1.join();
