@@ -7,7 +7,12 @@
 # InlineBench
 InlineBench is a C++ header-only Library/Framework (c++11 standard) for dynamically benchmarking code fragments.
 
+> Any questions, concerns, feedback, ideas or issues? Do not hesitate to [create an issue](https://github.com/lfreist/InlineBench/issues/new).
+
 ## Why InlineBench?
+
+> *SUMMARY*: You can start and stop runtime measurements *everywhere* within your code. When compiling without `-DBENCHMARK` flag, the result is just like you never used *InlineBench*. Thus, you can benchmark critical parts of your code in *production-like* environment and find the bottleneck within your program easier.
+
 There are a lot of very large and powerful benchmarking frameworks out there (e.g. [GoogleTest](https://github.com/google/googletest), [CppBenchmark](https://github.com/google/googletest), ...).
 So why and for what should you use *InlineBench*?
 
