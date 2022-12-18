@@ -3,14 +3,16 @@
 
 #pragma once
 
+#include <pthread.h>
+
 #include <chrono>
 #include <cmath>
 #include <iostream>
 #include <map>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
-#include <pthread.h>
 #include <vector>
 
 #if defined(unix) || defined(__unix) || defined(__unix__)
@@ -27,7 +29,7 @@ class CPUTime {
  public:
 #if defined(__IB_UNIX__)
   static int64_t now() {
-    struct timespec ts{};
+    struct timespec ts {};
     pthread_t pth_t = pthread_self();
     clockid_t clock_id;
     pthread_getcpuclockid(pth_t, &clock_id);
@@ -37,13 +39,9 @@ class CPUTime {
     return (ts.tv_sec * 1000000000) + ts.tv_nsec;
   }
 #elif defined(__IB_APPLE__)
-  static  int64_t now() {
-    return -1;
-  }
+  static int64_t now() { return -1; }
 #elif defined(__IB_WINDOWS__)
-  static int64_t now() {
-    return -1;
-  }
+  static int64_t now() { return -1; }
 #endif
 };
 

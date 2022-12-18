@@ -78,55 +78,18 @@ INLINE_BENCH_WALL_STOP("name of the measurement");
 ```
 A detailed and running example can be found [here](https://github.com/lfreist/InlineBench/tree/main/examples/example0.cpp).
 
-### Measuring Wall Time of a Thread
-If multiple threads reach the macros, each thread is measured by it own.
-Imagine you have multiple threads calling the same function but with different arguments.
-Thus, the different threads might have different runtimes on this function, and you want to know the runtime of every thread.
-Not the summed time.
-Here we go!
-```c++
-INLINE_BENCH_THREAD_WALL_START("name of the measurement");
-INLINE_BENCH_THREAD_WALL_STOP("name of the measurement");
-```
-
-#### Example
-This example measures the wall time of the computation of `fibonacci(40)` for each thread reaching the code:
-```c++
-INLINE_BENCH_THREAD_WALL_START("name of the measurement");
-int res = fibonacci(40);
-INLINE_BENCH_THREAD_WALL_STOP("name of the measurement");
-```
-A detailed and running example can be found [here](https://github.com/lfreist/InlineBench/tree/main/examples/example1.cpp).
-
-### Measuring Total CPU Time
-The CPU time is the time your CPU has spent computing your stuff.
-Thus, if you run your code on multiple threads, the CPU time might be more than the 'real' time, since your CPU has tricked the 'real' time by parallel computation.
-```cpp
-INLINE_BENCH_TOTAL_CPU_START("name of the measurement");
-INLINE_BENCH_TOTAL_CPU_STOP("name of the measurement");
-```
-
-#### Example
-```cpp
-INLINE_BENCH_TOTAL_CPU_START("name of the measurement");
-sleep(5);
-INLINE_BENCH_TOTAL_CPU_STOP("name of the measurement");
-```
-A detailed and running example can be found [here](https://github.com/lfreist/InlineBench/tree/main/examples/example2.cpp).
-
-### Measuring Thread CPU Time
-We again image, that we run multiple threads on some code.
+### Measuring CPU Time
+We image, that we run multiple threads on some code.
 If we want to know, how long the different threads spent running the code, we simply use this macro:
 ```cpp
-INLINE_BENCH_THREAD_CPU_START("name of the measurement");
-INLINE_BENCH_THREAD_CPU_STOP("name of the measurement");
+INLINE_BENCH_CPU_START("name of the measurement");
+INLINE_BENCH_CPU_STOP("name of the measurement");
 ```
 
 #### Example
 ```cpp
-INLINE_BENCH_THREAD_CPU_START("name of the measurement");
+INLINE_BENCH_CPU_START("name of the measurement");
 sleep(5);
-INLINE_BENCH_THREAD_CPU_STOP("name of the measurement");
+INLINE_BENCH_CPU_STOP("name of the measurement");
 ```
 A detailed and running example can be found [here](https://github.com/lfreist/InlineBench/tree/main/examples/example3.cpp).
-
