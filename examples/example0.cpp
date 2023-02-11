@@ -18,10 +18,11 @@ int fibonacci(int n) {
 }
 
 int main() {
-  INLINE_BENCHMARK_WALL_START("computing fibonacci");
+  INLINE_BENCHMARK_WALL_START(_, computing fibonacci);
   int result = fibonacci(40);
-  INLINE_BENCHMARK_WALL_STOP("computing fibonacci");
+  INLINE_BENCHMARK_WALL_STOP(computing fibonacci);
+
   std::cout << "fibonacci(40) = " << result << std::endl;
-  std::cout << INLINE_BENCHMARK_REPORT("plain") << std::endl;
+  std::cout << INLINE_BENCHMARK_REPORT(plain) << std::endl;
   return 0;
 }

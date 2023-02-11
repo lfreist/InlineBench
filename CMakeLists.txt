@@ -25,4 +25,11 @@ target_include_directories(InlineBench INTERFACE .)
 
 IF(${MAIN_PROJECT})
     add_subdirectory(examples)
+    include(CTest)
+
+    add_test(Ex0 examples/Example0)
+    add_test(Ex1 examples/Example1)
+    add_test(Ex2 examples/Example2)
+    add_test(Ex3 examples/Example3)
+    add_test(ExScope examples/ExampleScope)
 ENDIF()

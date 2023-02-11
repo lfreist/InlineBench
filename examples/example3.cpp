@@ -13,13 +13,12 @@
 
 void busy_wait_for(int seconds) {
   auto start = std::chrono::steady_clock::now();
-  INLINE_BENCHMARK_CPU_START("sleep");
+  INLINE_BENCHMARK_CPU_START(_, sleep);
   while (true) {
     if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start).count() >= seconds) {
       break;
     }
   }
-  INLINE_BENCHMARK_CPU_STOP("sleep");
 }
 
 int main() {
@@ -32,6 +31,6 @@ int main() {
   t1.join();
   t2.join();
 
-  std::cout << INLINE_BENCHMARK_REPORT("plain") << std::endl;
+  std::cout << INLINE_BENCHMARK_REPORT(plain) << std::endl;
   return 0;
 }

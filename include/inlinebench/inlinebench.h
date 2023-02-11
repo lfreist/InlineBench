@@ -111,10 +111,6 @@ class InlineBenchmarkCPU : public InlineBenchmark<int64_t> {
     auto& pair = res_vector.back();
     if (pair.second == 0) {
       pair.second = now;
-    } else {
-      throw std::runtime_error(
-          "Stopping code benchmark failed, since this benchmark id has not "
-          "started a timer on this thread yet.");
     }
   };
 
@@ -169,10 +165,6 @@ class InlineBenchmarkWall : public InlineBenchmark<std::chrono::time_point<std::
     auto& pair = res_vector.back();
     if (pair.second == std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>{}) {
       pair.second = std::chrono::steady_clock::now();
-    } else {
-      throw std::runtime_error(
-          "Stopping code benchmark failed, since this benchmark id has not "
-          "started a timer on this thread yet.");
     }
   };
 
@@ -344,6 +336,14 @@ class InlineBenchmarkHandler {
 // ==== registrator ====================================================================================================
 class InlineBenchmarkRegistrator {
  public:
+  InlineBenchmarkRegistrator(std::string name, BenchmarkType bm_t_id) : _name(std::move(name)), _bm_t_id(bm_t_id) {
+    InlineBenchmarkRegistrator::start(_name, _bm_t_id);
+  }
+
+  ~InlineBenchmarkRegistrator() {
+    InlineBenchmarkRegistrator::stop(_name, _bm_t_id);
+  }
+
   static void start(const std::string& name, BenchmarkType bm_t_id) {
     InlineBenchmarkHandler& instance = InlineBenchmarkHandler::GetInstance();
     instance.start(name, bm_t_id);
@@ -358,18 +358,31 @@ class InlineBenchmarkRegistrator {
     InlineBenchmarkHandler& instance = InlineBenchmarkHandler::GetInstance();
     return instance.Report(fmt);
   }
+
+ private:
+  std::string _name;
+  BenchmarkType _bm_t_id;
 };
 
 // ==== MACROS =========================================================================================================
 
 #ifdef BENCHMARK
-#define INLINE_BENCHMARK_CPU_START(name) InlineBenchmarkRegistrator::start(name, CPU)
-#define INLINE_BENCHMARK_CPU_STOP(name) InlineBenchmarkRegistrator::stop(name, CPU)
 
-#define INLINE_BENCHMARK_WALL_START(name) InlineBenchmarkRegistrator::start(name, WALL)
-#define INLINE_BENCHMARK_WALL_STOP(name) InlineBenchmarkRegistrator::stop(name, WALL)
+#define concatArgs(...) \
+    std::string(__VA_ARGS__).empty() ? "" : (" " + std::string(__VA_ARGS__)) + concatArgs1(__VA_ARGS__)
+#define concatArgs1(...) \
+    std::string(__VA_ARGS__).empty() ? "" : (" " + std::string(__VA_ARGS__)) + concatArgs(__VA_ARGS__)
 
-#define INLINE_BENCHMARK_REPORT(fmt) InlineBenchmarkRegistrator::report(fmt)
+#define INLINE_BENCHMARK_CPU_START(var, name, ...) \
+  InlineBenchmarkRegistrator var = InlineBenchmarkRegistrator(std::string(#name), CPU)
+#define INLINE_BENCHMARK_CPU_STOP(name) \
+  InlineBenchmarkRegistrator::stop(std::string(#name), CPU)
+#define INLINE_BENCHMARK_WALL_START(var, name) \
+  InlineBenchmarkRegistrator var = InlineBenchmarkRegistrator(std::string(#name), WALL)
+#define INLINE_BENCHMARK_WALL_STOP(name) \
+  InlineBenchmarkRegistrator::stop(std::string(#name), WALL)
+
+#define INLINE_BENCHMARK_REPORT(fmt) InlineBenchmarkRegistrator::report(#fmt)
 #else
 // empty definitions
 #define INLINE_BENCHMARK_CPU_START(name)

@@ -12,3 +12,6 @@ target_link_libraries(Example3 PUBLIC InlineBench)
 
 add_executable(Example4 example4.cpp)
 target_link_libraries(Example4 PUBLIC InlineBench)
+
+add_executable(ExampleScope example_scope.cpp)
+target_link_libraries(ExampleScope PUBLIC InlineBench)

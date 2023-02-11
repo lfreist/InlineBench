@@ -20,9 +20,9 @@ int _fibonacci(int n) {
 }
 
 int fibonacci(int n) {
-  INLINE_BENCHMARK_WALL_START("computing fibonacci");
+  INLINE_BENCHMARK_WALL_START(_, computing fibonacci);
   int res = _fibonacci(n);
-  INLINE_BENCHMARK_WALL_STOP("computing fibonacci");
+  INLINE_BENCHMARK_WALL_STOP(computing fibonacci);
   std::cout << "fibonacci(" << n << ") = " << res << std::endl;
   return res;
 }
@@ -36,6 +36,6 @@ int main() {
   t1.join();
   t2.join();
 
-  std::cout << INLINE_BENCHMARK_REPORT("plain") << std::endl;
+  std::cout << INLINE_BENCHMARK_REPORT(plain) << std::endl;
   return 0;
 }
