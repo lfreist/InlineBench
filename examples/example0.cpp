@@ -18,7 +18,7 @@ int fibonacci(int n) {
 }
 
 int main() {
-  INLINE_BENCHMARK_WALL_START(_, computing fibonacci);
+  INLINE_BENCHMARK_WALL_START_GLOBAL(computing fibonacci);
   int result = fibonacci(40);
   INLINE_BENCHMARK_WALL_STOP(computing fibonacci);
 

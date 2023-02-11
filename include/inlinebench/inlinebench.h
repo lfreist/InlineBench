@@ -373,12 +373,16 @@ class InlineBenchmarkRegistrator {
 #define concatArgs1(...) \
     std::string(__VA_ARGS__).empty() ? "" : (" " + std::string(__VA_ARGS__)) + concatArgs(__VA_ARGS__)
 
-#define INLINE_BENCHMARK_CPU_START(var, name, ...) \
+#define INLINE_BENCHMARK_CPU_START(var, name) \
   InlineBenchmarkRegistrator var = InlineBenchmarkRegistrator(std::string(#name), CPU)
+#define INLINE_BENCHMARK_CPU_START_GLOBAL(name) \
+  InlineBenchmarkRegistrator::start(std::string(#name), CPU)
 #define INLINE_BENCHMARK_CPU_STOP(name) \
   InlineBenchmarkRegistrator::stop(std::string(#name), CPU)
 #define INLINE_BENCHMARK_WALL_START(var, name) \
   InlineBenchmarkRegistrator var = InlineBenchmarkRegistrator(std::string(#name), WALL)
+#define INLINE_BENCHMARK_WALL_START_GLOBAL(name) \
+  InlineBenchmarkRegistrator::start(std::string(#name), WALL)
 #define INLINE_BENCHMARK_WALL_STOP(name) \
   InlineBenchmarkRegistrator::stop(std::string(#name), WALL)
 
