@@ -12,6 +12,10 @@ InlineBench is a C++ header-only Library/Framework (c++11 standard) for dynamica
 ## Why InlineBench?
 
 > *SUMMARY*: You can start and stop runtime measurements *everywhere* within your code. When compiling without `-DBENCHMARK` flag, the result is just like you never used *InlineBench*. Thus, you can benchmark critical parts of your code in *production-like* environment and find the bottleneck within your program easier.
+> - header only
+> - no dependencies
+> - benchmarking production code
+> - no additional benchmark code needed
 
 There are a lot of very large and powerful benchmarking frameworks out there (e.g. [GoogleTest](https://github.com/google/googletest), [CppBenchmark](https://github.com/google/googletest), ...).
 So why and for what should you use *InlineBench*?
@@ -28,8 +32,6 @@ Checkout the section [Features and Examples](#features-and-examples) for more in
 
 ## Include *InlineBench* to Your Project
 You can either just include the [`inlinebench.h`](https://github.com/lfreist/InlineBench/tree/main/include/inlinebench/inlinebench.h) header into your files.
-
-> In this case **you must** link libbost-chrono when compiling!
 
 Or you use the cmake interface library provided (`InlineBench`).
 
